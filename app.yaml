@@ -1,0 +1,17 @@
+runtime: python39  # Specifies the Python runtime version
+
+handlers:
+- url: /.*
+  script: auto  # Use 'auto' to let App Engine automatically find your WSGI application
+  
+env_variables:
+  DATABASE_URL: "sqlite:///survey.db"  # Set your environment variables here
+  SECRET_KEY: "your-secret-key"         # Add other environment variables if needed
+
+entrypoint: gunicorn -b :$PORT survey:app  # Specifies the command to start your app
+
+# Optional: Customize instance class and scaling
+instance_class: F2
+automatic_scaling:
+  min_instances: 1
+  max_instances: 5
